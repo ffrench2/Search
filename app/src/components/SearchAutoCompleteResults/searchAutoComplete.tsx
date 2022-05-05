@@ -1,11 +1,23 @@
-export const SearchAutoComplete = (props: any) => {
-  if (!!props.items && props.items.length) {
+import "./searchAutoComplete.css";
+import {
+  ISearchAutoCompleteProps,
+  ISearchItemProps,
+} from "./searchAutoComplete.interface";
+
+export const SearchAutoComplete = (props: ISearchAutoCompleteProps) => {
+  if (!!props.autoCompleteData && props.autoCompleteData.length) {
     return (
       <div
         className="SearchAutoCompleteContainer"
         data-testid={"SearchAutoCompleteContainerTestId"}
       >
-        this is auto complete
+        {props.autoCompleteData.map((item: ISearchItemProps) => {
+          return (
+            <div key={item.id} className="autoCompleteData">
+              {item.text}
+            </div>
+          );
+        })}
       </div>
     );
   }

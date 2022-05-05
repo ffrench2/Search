@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import SearchAutoComplete from "../SearchAutoCompleteResults/searchAutoComplete";
 import "./searchInput.css";
 
 const SearchInput = () => {
   const [querySearch, setQuerySearch] = useState("");
+  const [autoComplete, setAutoComplete] = useState([]);
 
   useEffect(() => {
     if (querySearch.length >= 3) {
       axios
-        .get("https://api.aylien.com/news/autocompletes", {
+        .get("news/autocompletes", {
           headers: {
             "Content-Type": "application/json",
             "X-AYLIEN-NewsAPI-Application-ID": "0ded468e",
@@ -23,7 +25,8 @@ const SearchInput = () => {
           },
         })
         .then(function (response) {
-          console.log("response", response);
+          setAutoComplete(response.data.autocompletes);
+          console.log(autoComplete);
         })
         .catch(function (error) {
           console.log(error);
@@ -32,19 +35,22 @@ const SearchInput = () => {
   }, [querySearch]);
 
   return (
-    <div className="searchInputContainer">
-      <form className="form" action="/" method="get">
-        <input
-          className="input"
-          type="text"
-          id="SearchInput"
-          placeholder="Companies, Organisations, People or Places"
-          name="search"
-          onChange={(event) => setQuerySearch(event.target.value)}
-        />
-        <button type="submit">SEARCH</button>
-      </form>
-    </div>
+    <>
+      <div className="searchInputContainer">
+        <form className="form" action="/" method="get">
+          <input
+            className="input"
+            type="text"
+            id="SearchInput"
+            placeholder="Companies, Organisations, People or Places"
+            name="search"
+            onChange={(event) => setQuerySearch(event.target.value)}
+          />
+          <button type="submit">SEARCH</button>
+        </form>
+      </div>
+      <SearchAutoComplete autoCompleteData={autoComplete} />
+    </>
   );
 };
 
