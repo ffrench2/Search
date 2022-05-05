@@ -1,10 +1,11 @@
 import "./searchAutoComplete.css";
-import {
-  ISearchAutoCompleteProps,
-  ISearchItemProps,
-} from "./searchAutoComplete.interface";
+import { ISearchItemProps } from "./searchAutoComplete.interface";
 
-export const SearchAutoComplete = (props: ISearchAutoCompleteProps) => {
+export const SearchAutoComplete = (props: any) => {
+  const clickHandler = (text: string) => {
+    console.log(text);
+  };
+
   if (!!props.autoCompleteData && props.autoCompleteData.length) {
     return (
       <div
@@ -13,7 +14,11 @@ export const SearchAutoComplete = (props: ISearchAutoCompleteProps) => {
       >
         {props.autoCompleteData.map((item: ISearchItemProps) => {
           return (
-            <div key={item.id} className="autoCompleteData">
+            <div
+              onClick={() => clickHandler(item.text)}
+              key={item.id}
+              className="autoCompleteData"
+            >
               {item.text}
             </div>
           );

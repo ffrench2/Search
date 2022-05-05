@@ -1,38 +1,22 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import SearchAutoComplete from "../SearchAutoCompleteResults/searchAutoComplete";
 import "./searchInput.css";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { getAutoCompleteResponse } from "../../redux/story-actions";
 
 const SearchInput = () => {
+  const dispatch = useAppDispatch();
+
+  const autoComplete = useAppSelector(
+    (state) => state.autoComplete.autoCompletes
+  );
   const [querySearch, setQuerySearch] = useState("");
-  const [autoComplete, setAutoComplete] = useState([]);
 
   useEffect(() => {
     if (querySearch.length >= 3) {
-      axios
-        .get("news/autocompletes", {
-          headers: {
-            "Content-Type": "application/json",
-            "X-AYLIEN-NewsAPI-Application-ID": "0ded468e",
-            "X-AYLIEN-NewsAPI-Application-Key":
-              "d62de22539e8bbc572c2a6ab0eb19ed4",
-          },
-          params: {
-            type: "dbpedia_resources",
-            term: querySearch,
-            language: "en",
-            perPage: 3,
-          },
-        })
-        .then(function (response) {
-          setAutoComplete(response.data.autocompletes);
-          console.log(autoComplete);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      dispatch(getAutoCompleteResponse(querySearch));
     }
-  }, [querySearch]);
+  }, [querySearch, dispatch]);
 
   return (
     <>
