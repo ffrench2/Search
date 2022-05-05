@@ -33,5 +33,5 @@ export const getStories = async (querySearch: string) => {
     },
   });
 
-  return response.data;
+  return response.data.stories;
 };

@@ -15,6 +15,9 @@ const autoCompleteSlice = createSlice({
     setAutoComplete(state, action: PayloadAction<any[]>) {
       state.autoCompletes = action.payload;
     },
+    emptyAutoComplete(state) {
+      state.autoCompletes = [];
+    },
   },
 });
 

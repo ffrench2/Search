@@ -17,6 +17,17 @@ export const getAutoCompleteResponse = (
   };
 };
 
+export const emptyAutoCompleteResponse = (): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  AnyAction
+> => {
+  return async (dispatch) => {
+    dispatch(autoCompleteActions.emptyAutoComplete());
+  };
+};
+
 export const getStoriesResponse = (
   value: string
 ): ThunkAction<void, RootState, unknown, AnyAction> => {

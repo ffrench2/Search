@@ -1,9 +1,16 @@
+import { useAppDispatch } from "../../hooks";
+import {
+  emptyAutoCompleteResponse,
+  getStoriesResponse,
+} from "../../redux/story-actions";
 import "./searchAutoComplete.css";
 import { ISearchItemProps } from "./searchAutoComplete.interface";
 
 export const SearchAutoComplete = (props: any) => {
+  const dispatch = useAppDispatch();
   const clickHandler = (text: string) => {
-    console.log(text);
+    dispatch(getStoriesResponse(text));
+    dispatch(emptyAutoCompleteResponse());
   };
 
   if (!!props.autoCompleteData && props.autoCompleteData.length) {
