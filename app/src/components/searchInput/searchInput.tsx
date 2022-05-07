@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import SearchAutoComplete from "../SearchAutoCompleteResults/searchAutoComplete";
 import "./searchInput.css";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getAutoCompleteResponse } from "../../redux/story-actions";
+import {
+  emptyAutoCompleteResponse,
+  getAutoCompleteResponse,
+  getStoriesResponse,
+} from "../../redux/story-actions";
 
 const SearchInput = () => {
   const dispatch = useAppDispatch();
@@ -18,10 +22,15 @@ const SearchInput = () => {
     }
   }, [querySearch, dispatch]);
 
+  const handleSubmit = (querySearch: string) => {
+    dispatch(getStoriesResponse(querySearch));
+    dispatch(emptyAutoCompleteResponse());
+  };
+
   return (
     <>
       <div className="searchInputContainer">
-        <form className="form" action="/" method="get">
+        <div className="form">
           <input
             className="input"
             type="text"
@@ -30,8 +39,8 @@ const SearchInput = () => {
             name="search"
             onChange={(event) => setQuerySearch(event.target.value)}
           />
-          <button type="submit">SEARCH</button>
-        </form>
+          <button onClick={() => handleSubmit(querySearch)}>SEARCH</button>
+        </div>
       </div>
       <SearchAutoComplete autoCompleteData={autoComplete} />
     </>
