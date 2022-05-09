@@ -4,9 +4,12 @@ import {
   getStoriesResponse,
 } from "../../redux/story-actions";
 import "./searchAutoComplete.css";
-import { ISearchItemProps } from "./searchAutoComplete.interface";
+import {
+  ISearchAutoCompleteProps,
+  ISearchItemProps,
+} from "./searchAutoComplete.interface";
 
-export const SearchAutoComplete = (props: any) => {
+export const SearchAutoComplete = (props: ISearchAutoCompleteProps) => {
   const dispatch = useAppDispatch();
   const clickHandler = (text: string) => {
     dispatch(getStoriesResponse(text));

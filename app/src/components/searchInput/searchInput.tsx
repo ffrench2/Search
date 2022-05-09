@@ -16,6 +16,14 @@ const SearchInput = () => {
   );
   const [querySearch, setQuerySearch] = useState("");
 
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      event.stopPropagation();
+      handleSubmit(querySearch);
+    }
+  };
+
   useEffect(() => {
     if (querySearch.length >= 3) {
       dispatch(getAutoCompleteResponse(querySearch));
@@ -29,9 +37,14 @@ const SearchInput = () => {
 
   return (
     <>
-      <div className="searchInputContainer">
+      <div
+        data-testid={"searchInputContainerTestId"}
+        className="searchInputContainer"
+      >
         <div className="form">
           <input
+            onKeyDown={(event) => onKeyDown(event)}
+            data-testid={"searchInputTestId"}
             className="input"
             type="text"
             id="SearchInput"
@@ -39,7 +52,12 @@ const SearchInput = () => {
             name="search"
             onChange={(event) => setQuerySearch(event.target.value)}
           />
-          <button onClick={() => handleSubmit(querySearch)}>SEARCH</button>
+          <button
+            data-testid={"searchInputSubmitButtonTestId"}
+            onClick={() => handleSubmit(querySearch)}
+          >
+            SEARCH
+          </button>
         </div>
       </div>
       <SearchAutoComplete autoCompleteData={autoComplete} />

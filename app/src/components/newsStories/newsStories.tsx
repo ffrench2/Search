@@ -23,7 +23,7 @@ export const NewsStories = () => {
                   <a
                     href={item.links.permalink}
                     target="_blank"
-                    rel="newsStories"
+                    rel="noreferrer"
                   >
                     Click here to read more
                   </a>
